@@ -25,7 +25,7 @@ navLinks.forEach(link => {
 });
 
 // === WEATHER FETCH ===
-const apiKey = "YOUR_API_KEY_HERE";
+const apiKey = "bd5e378503939ddaee76f12ad7a97608";
 const cityName = "Houston";
 
 async function fetchWeather() {
@@ -35,25 +35,72 @@ async function fetchWeather() {
     );
     const data = await response.json();
 
-    document.getElementById("city").textContent = data.name;
-    document.getElementById("temp").textContent = `${Math.round(
+    document.getElementsByClassName("city").textContent = data.name;
+    document.getElementsByClassName("temp").textContent = `${Math.round(
       data.main.temp
     )}°F`;
-    document.getElementById("desc").textContent = data.weather[0].description
+    document.getElementsByClassName("desc").textContent = data.weather[0].description
       .split(" ")
       .map(w => w[0].toUpperCase() + w.slice(1))
       .join(" ");
-    document.getElementById(
+    document.getElementsByClassName(
       "details"
     ).textContent = `Feels like ${Math.round(
       data.main.feels_like
     )}°F | Humidity ${data.main.humidity}%`;
   } catch (error) {
     console.error("Error fetching weather:", error);
-    document.getElementById("desc").textContent =
+    document.getElementsByClassName("desc").textContent =
       "Unable to fetch weather data.";
   }
 }
 
 // Load weather data immediately
 fetchWeather();
+
+// === NOTES FEATURE ===
+
+// Load notes on page load
+let notes = JSON.parse(localStorage.getItem("notes")) || [];
+
+function displayNotes() {
+  const notesList = document.getElementById("notes-list");
+  notesList.innerHTML = "";
+
+  notes.forEach((note, index) => {
+    const noteDiv = document.createElement("div");
+    noteDiv.classList.add("note-item");
+
+    noteDiv.innerHTML = `
+      <p class="note-text">${note}</p>
+      <button class="delete-btn" onclick="deleteNote(${index})">Delete</button>
+    `;
+
+    notesList.appendChild(noteDiv);
+  });
+}
+
+function addNote() {
+  const noteInput = document.getElementById("note-input");
+  const text = noteInput.value.trim();
+
+  if (text === "") return;
+
+  notes.push(text);
+  localStorage.setItem("notes", JSON.stringify(notes));
+
+  noteInput.value = "";
+  displayNotes();
+}
+
+function deleteNote(index) {
+  notes.splice(index, 1);
+  localStorage.setItem("notes", JSON.stringify(notes));
+  displayNotes();
+}
+
+// Add button listener
+document.getElementById("add-note-btn").addEventListener("click", addNote);
+
+// Display notes when switching to notes page
+displayNotes();

@@ -34,11 +34,18 @@
       </div>
 
       <div class="card-grid">
+
+        
         <section class="card" id="weather-card">
           <header class="card-header">
             <h2>Weather</h2>
           </header>
-          <div class="card-content"></div>
+          <div class="card-content">
+            <h3 class="city">Loading...</h3>
+          <h1 class="temp">--°F</h1>
+          <p class="desc">Fetching data...</p>
+          <p class="details"></p>
+          </div>
         </section>
 
         <section class="card" id="tasks-card">
@@ -52,7 +59,8 @@
           <header class="card-header">
             <h2>Notes</h2>
           </header>
-          <div class="card-content"></div>
+          <div class="card-content">
+          </div>
         </section>
 
         <section class="card" id="music-card">
@@ -76,16 +84,25 @@
       <div class="weather-container">
         <h2>🌤 Weather</h2>
         <div class="weather-info">
-          <h3 id="city">Loading...</h3>
-          <h1 id="temp">--°F</h1>
-          <p id="desc">Fetching data...</p>
-          <p id="details"></p>
+          <h3 class="city">Loading...</h3>
+          <h1 class="temp">--°F</h1>
+          <p class="desc">Fetching data...</p>
+          <p class="details"></p>
         </div>
       </div>
     </section>
 
-    <!-- ===== EMPTY PAGES FOR FUTURE SECTIONS ===== -->
-    <section id="notes" class="page"></section>
+    <section id="notes" class="page">
+    <div class="notes-container">
+    <h2>📝 Notes</h2>
+
+    <textarea id="note-input" placeholder="Type your note here..."></textarea>
+
+    <button id="add-note-btn">Add Note</button>
+
+    <div id="notes-list"></div>
+  </div>
+    </section>
     <section id="tasks" class="page"></section>
     <section id="music" class="page"></section>
     <section id="gallery" class="page"></section>
