@@ -91,12 +91,19 @@ function addNote() {
 
   noteInput.value = "";
   displayNotes();
+
+  displayNotes();
+  updateNotesPreview();
+
 }
 
 function deleteNote(index) {
   notes.splice(index, 1);
   localStorage.setItem("notes", JSON.stringify(notes));
   displayNotes();
+
+  displayNotes();
+  updateNotesPreview();
 }
 
 // Add button listener
@@ -104,3 +111,23 @@ document.getElementById("add-note-btn").addEventListener("click", addNote);
 
 // Display notes when switching to notes page
 displayNotes();
+
+
+function updateNotesPreview() {
+  const preview = document.getElementById("notes-preview");
+
+  if (!preview) return;
+
+  if (notes.length === 0) {
+    preview.textContent = "No notes yet.";
+    return;
+  }
+
+  const lastTwo = notes.slice(-2).reverse(); // newest first
+  preview.innerHTML = lastTwo
+    .map(note => {
+      const short = note.length > 60 ? note.substring(0, 60) + "..." : note;
+      return `<p>• ${short}</p>`;
+    })
+    .join("");
+}
